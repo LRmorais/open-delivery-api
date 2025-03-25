@@ -24,7 +24,9 @@
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.5",
     "serverless": "^3.29.0",
-    "serverless-http": "^3.2.0"
+    "serverless-http": "^3.2.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "@types/axios": "^0.9.36",
@@ -32,6 +34,8 @@
     "@types/node": "^22.13.1",
     "@types/pg": "^8.11.11",
     "@types/sequelize": "^4.28.20",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.8",
     "nodemon": "^3.1.9",
     "serverless": "^3.29.0",
     "serverless-offline": "^12.0.4",
