@@ -13,11 +13,20 @@ const swaggerDefinition = {
             description: 'Servidor local',
         },
     ],
+    tags: [
+        {
+            name: 'Auth',
+            description: 'Autenticação e geração de token',
+        },
+    ],
 };
 
 const options = {
     swaggerDefinition,
-    apis: ['src/routes/**/*.ts'], // rotas com anotações JSDoc
+    apis: [
+        'src/routes/**/*.ts',
+        'src/docs/**/*.ts'
+    ], // rotas com anotações JSDoc
 };
 
 export const swaggerSpec = swaggerJSDoc(options);
