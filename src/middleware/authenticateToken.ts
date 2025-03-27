@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { problem } from '../utils/responseHelper';
 
-interface AuthenticatedRequest extends Request {
+export interface AuthenticatedRequest extends Request {
     client?: {
         client_id: string;
         company_id: number;
@@ -10,16 +10,17 @@ interface AuthenticatedRequest extends Request {
     };
 }
 
-export const authenticateToken = (
+export function authenticateToken(
     req: AuthenticatedRequest,
     res: Response,
     next: NextFunction
-) => {
+): void {
     const authHeader = req.headers['authorization'];
     const token = authHeader?.split(' ')[1];
 
     if (!token) {
-        return problem(res, 'Token de autenticação não fornecido', 401);
+        problem(res, 'Token de autenticação não fornecido', 401);
+        return;
     }
 
     try {
@@ -32,6 +33,6 @@ export const authenticateToken = (
         req.client = decoded;
         next();
     } catch (err) {
-        return problem(res, 'Token inválido ou expirado', 401);
+        problem(res, 'Token inválido ou expirado', 401);
     }
-};
+}
