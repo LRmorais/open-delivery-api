@@ -1,14 +1,8 @@
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { problem } from '../utils/responseHelper';
+import {AuthenticatedRequest} from "../interfaces/AuthenticatedRequest";
 
-export interface AuthenticatedRequest extends Request {
-    client?: {
-        client_id: string;
-        company_id: number;
-        integration_type: string;
-    };
-}
 
 export function authenticateToken(
     req: AuthenticatedRequest,
