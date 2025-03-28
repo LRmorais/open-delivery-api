@@ -2,6 +2,9 @@ import { Router } from 'express';
 import { authenticateToken } from '../../middleware/authenticateToken';
 import { success, problem } from '../../utils/responseHelper';
 import { EventTypeEnum, ALL_EVENT_TYPES } from '../../enums/EventTypeEnum';
+import { EventPollingResponse } from '../../interfaces/EventPollingResponse';
+import { AuthenticatedRequest } from '../../interfaces/AuthenticatedRequest';
+import { v4 as uuidv4 } from 'uuid';
 
 const router = Router();
 
@@ -37,50 +40,31 @@ const router = Router();
  *       400:
  *         description: Requisição inválida
  */
-router.get('/events:polling', authenticateToken, async (req, res) => {
+router.get('/events:polling', authenticateToken, async (req: AuthenticatedRequest, res) => {
     const { eventType } = req.query;
-    const merchants = req.headers['x-polling-merchants'];
 
-    if (!merchants) {
-        problem(res, 'x-polling-merchants header é obrigatório', 400);
-        return
-    }
+    const rawTypes = Array.isArray(eventType) ? eventType : eventType ? [eventType] : [];
+    const selectedTypes: string[] = rawTypes
+        .map((t) => String(t))
+        .filter((t): t is EventTypeEnum => Object.values(EventTypeEnum).includes(t as EventTypeEnum));
 
-    let selectedTypes: string[] = [];
+    const typesToUse = selectedTypes.length > 0 ? selectedTypes : ALL_EVENT_TYPES;
 
-    if (!eventType) {
-        selectedTypes = ALL_EVENT_TYPES;
-    } else if (Array.isArray(eventType)) {
-        selectedTypes = eventType.filter((t) => ALL_EVENT_TYPES.includes(t));
-    } else {
-        if (ALL_EVENT_TYPES.includes(eventType)) {
-            selectedTypes = [eventType];
-        } else {
-            problem(res, `eventType '${eventType}' é inválido`, 400);
-            return
-        }
-    }
+    const simulatedOrderIds = [101, 102];
 
-    const fakeEvents = [
-        {
-            id: 'event_123',
-            type: EventTypeEnum.CREATED,
-            orderId: 'order_abc123',
-            timestamp: new Date().toISOString(),
-        },
-        {
-            id: 'event_124',
-            type: EventTypeEnum.CANCELLED,
-            orderId: 'order_xyz456',
-            timestamp: new Date().toISOString(),
-        },
-    ];
-
-    const filtered = fakeEvents.filter((event) =>
-        selectedTypes.includes(event.type)
+    const events: EventPollingResponse[] = simulatedOrderIds.flatMap((orderId) =>
+        typesToUse.map((type) => ({
+            eventId: uuidv4(),
+            eventType: type as EventTypeEnum,
+            orderId,
+            orderURL: `https://api.seusistema.com.br/v1/orders/${orderId}`,
+            createdAt: new Date().toISOString(),
+            sourceAppId: req.client?.client_id || 'unknown',
+            virtualBrand: 'Loja Padrão',
+        }))
     );
 
-    success(res, filtered);
+    success(res, events);
     return
 });
 
