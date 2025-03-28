@@ -1,0 +1,10 @@
+export enum OrderStatusEnum {
+    RECEBIDO = 1,
+    AGUARDANDO_ENTREGADOR = 2,
+    ENTREGADOR_NA_LOJA = 3,
+    A_CAMINHO_DO_CLIENTE = 4,
+    ENTREGUE = 5,
+    CANCELADO = 6,
+    A_CAMINHO_DA_RETIRADA = 7,
+    CHEGOU_NA_ENTREGA = 8,
+}
