@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 // Swagger UI
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.use('/api/authentication/', router);
+app.use('/api', router);
 app.get('/teste', (req, res) => {
     res.json({ message: 'Rota de teste funcionando!' });
 });
