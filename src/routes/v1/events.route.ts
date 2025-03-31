@@ -7,6 +7,7 @@ import { AuthenticatedRequest } from '../../interfaces/AuthenticatedRequest';
 import { v4 as uuidv4 } from 'uuid';
 import Order from '../../database/models/Order';
 import { Op } from 'sequelize';
+import Company from "../../database/models/Company";
 
 const router = Router();
 
@@ -32,6 +33,13 @@ router.get('/events:polling', authenticateToken, async (req: AuthenticatedReques
                 company_id: req.client?.company_id,
                 order_status_id: { [Op.in]: statusIds },
             },
+            include: [
+                {
+                    model: Company,
+                    as: 'company',
+                    attributes: ['fantasy_name'],
+                },
+            ],
         });
 
         const events: EventPollingResponse[] = orders.map((order) => {
@@ -46,7 +54,7 @@ router.get('/events:polling', authenticateToken, async (req: AuthenticatedReques
                 // orderURL: `https://api.seusistema.com.br/v1/orders/${order.id}`,
                 createdAt: new Date().toISOString(),
                 sourceAppId: req.client?.client_id || 'unknown',
-                virtualBrand: 'Loja Padrão',
+                virtualBrand: (order as any).company?.fantasy_name || 'Loja Desconhecida',
             };
         });
 
