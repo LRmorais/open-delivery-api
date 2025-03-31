@@ -18,6 +18,10 @@ const swaggerDefinition = {
             name: 'Auth',
             description: 'Autenticação e geração de token',
         },
+        {
+            name: 'Events',
+            description: 'Polling e acknowledgment de eventos de pedidos',
+        },
     ],
 };
 
