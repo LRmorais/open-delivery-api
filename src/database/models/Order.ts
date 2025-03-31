@@ -16,7 +16,7 @@ interface OrderAttributes {
     return?: boolean;
     distance?: number;
     delivery_cost?: number;
-    local_fee?: number;
+    loocal_fee?: number;
     scheduled?: Date;
     created_at: Date;
     updated_at: Date;
@@ -27,7 +27,7 @@ interface OrderAttributes {
 interface OrderCreationAttributes extends Optional<
     OrderAttributes,
     'id' | 'thermal_box' | 'get_sign' | 'cpf' | 'return' | 'distance' |
-    'delivery_cost' | 'local_fee' | 'scheduled' | 'deleted_at' | 'dynamic_cost'
+    'delivery_cost' | 'loocal_fee' | 'scheduled' | 'deleted_at' | 'dynamic_cost'
 > {}
 
 class Order extends Model<OrderAttributes, OrderCreationAttributes> implements OrderAttributes {
@@ -45,7 +45,7 @@ class Order extends Model<OrderAttributes, OrderCreationAttributes> implements O
     public return?: boolean;
     public distance?: number;
     public delivery_cost?: number;
-    public local_fee?: number;
+    public loocal_fee?: number;
     public scheduled?: Date;
     public created_at!: Date;
     public updated_at!: Date;
@@ -114,7 +114,7 @@ Order.init(
             allowNull: true,
             defaultValue: 0,
         },
-        local_fee: {
+        loocal_fee: {
             type: DataTypes.DECIMAL(5, 2),
             allowNull: true,
             defaultValue: 0,
