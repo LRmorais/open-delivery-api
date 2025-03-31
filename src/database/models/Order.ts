@@ -52,6 +52,7 @@ class Order extends Model<OrderAttributes, OrderCreationAttributes> implements O
     public updated_at!: Date;
     public deleted_at?: Date;
     public dynamic_cost?: boolean;
+    public company?: Company;
 }
 
 Order.init(
