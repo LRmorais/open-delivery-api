@@ -4,6 +4,7 @@ import Address from './models/Address';
 import Order from "./models/Order";
 import OrderStatus from "./models/OrderStatus";
 import PaymentType from "./models/PaymentType";
+import City from "./models/City";
 
 export const associateModels = () => {
     Company.belongsTo(Address, { as: 'address', foreignKey: 'address_id' });
@@ -11,6 +12,9 @@ export const associateModels = () => {
 
     Address.hasMany(Company, { foreignKey: 'address_id' });
     Address.hasMany(Customer, { foreignKey: 'address_id' });
+
+    Address.belongsTo(City, { foreignKey: 'city_id', as: 'city' });
+    City.hasMany(Address, { foreignKey: 'city_id' });
 
     Order.belongsTo(Company, { foreignKey: 'company_id', as: 'company' });
     Order.belongsTo(Customer, { foreignKey: 'customer_id', as: 'customer' });
@@ -22,4 +26,5 @@ export const associateModels = () => {
         foreignKey: 'payment_type_id',
         as: 'payment_type',
     });
+
 };

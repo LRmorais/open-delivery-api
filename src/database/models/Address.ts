@@ -1,5 +1,6 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import { sequelize } from '../sequelizeInstance';
+import City from "./City";
 
 interface AddressAttributes {
     id: number;
@@ -31,6 +32,7 @@ class Address extends Model<AddressAttributes, AddressCreationAttributes> implem
     public created_at?: Date;
     public updated_at?: Date;
     public deleted_at?: Date;
+    public city?: City;
 }
 
 Address.init(
