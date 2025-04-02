@@ -22,6 +22,10 @@ const swaggerDefinition = {
             name: 'Events',
             description: 'Polling e acknowledgment de eventos de pedidos',
         },
+        {
+            name: 'Orders',
+            description: 'Operações relacionadas a pedidos',
+        },
     ],
 };
 
