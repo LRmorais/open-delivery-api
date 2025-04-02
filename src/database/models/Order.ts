@@ -1,5 +1,5 @@
 import { DataTypes, Model, Optional } from 'sequelize';
-import { sequelize } from '../database';
+import { sequelize } from '../sequelizeInstance';
 import Company from "./Company";
 
 interface OrderAttributes {
@@ -150,10 +150,5 @@ Order.init(
         timestamps: false,
     }
 );
-
-Order.belongsTo(Company, {
-    foreignKey: 'company_id',
-    as: 'company',
-});
 
 export default Order;
