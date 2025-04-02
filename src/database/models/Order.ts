@@ -1,6 +1,9 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import { sequelize } from '../sequelizeInstance';
 import Company from "./Company";
+import Customer from "./Customer";
+import OrderStatus from "./OrderStatus";
+import PaymentType from "./PaymentType";
 
 interface OrderAttributes {
     id: number;
@@ -53,6 +56,9 @@ class Order extends Model<OrderAttributes, OrderCreationAttributes> implements O
     public deleted_at?: Date;
     public dynamic_cost?: boolean;
     public company?: Company;
+    public customer?: Customer;
+    public order_status?: OrderStatus;
+    public payment_type?: PaymentType;
 }
 
 Order.init(
