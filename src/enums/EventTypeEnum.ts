@@ -1,0 +1,39 @@
+import {OrderStatusEnum} from "./OrderStatusEnum";
+
+export enum EventTypeEnum {
+    CREATED = 'CREATED',
+    CONFIRMED = 'CONFIRMED',
+    PREPARATION_REQUESTED = 'PREPARATION_REQUESTED',
+    PREPARING = 'PREPARING',
+    READY_FOR_PICKUP = 'READY_FOR_PICKUP',
+    DISPATCHED = 'DISPATCHED',
+    PICKUP_AREA_ASSIGNED = 'PICKUP_AREA_ASSIGNED',
+    PICKED_UP = 'PICKED_UP',
+    DELIVERED = 'DELIVERED',
+    CONCLUDED = 'CONCLUDED',
+    CANCELLATION_REQUESTED = 'CANCELLATION_REQUESTED',
+    CANCELLATION_REQUEST_DENIED = 'CANCELLATION_REQUEST_DENIED',
+    CANCELLED = 'CANCELLED',
+    ORDER_CANCELLATION_REQUEST = 'ORDER_CANCELLATION_REQUEST',
+    CANCELLED_DENIED = 'CANCELLED_DENIED'
+}
+
+export const ALL_EVENT_TYPES = Object.values(EventTypeEnum);
+
+export const EventTypeToOrderStatus: Record<EventTypeEnum, number> = {
+    [EventTypeEnum.CREATED]: OrderStatusEnum.RECEBIDO,
+    [EventTypeEnum.CONFIRMED]: OrderStatusEnum.RECEBIDO,
+    [EventTypeEnum.CANCELLED]: OrderStatusEnum.CANCELADO,
+    [EventTypeEnum.DELIVERED]: OrderStatusEnum.ENTREGUE,
+    [EventTypeEnum.DISPATCHED]: OrderStatusEnum.A_CAMINHO_DA_RETIRADA,
+    [EventTypeEnum.READY_FOR_PICKUP]: OrderStatusEnum.AGUARDANDO_ENTREGADOR,
+    [EventTypeEnum.PICKED_UP]: OrderStatusEnum.A_CAMINHO_DO_CLIENTE,
+    [EventTypeEnum.PREPARING]: OrderStatusEnum.ENTREGADOR_NA_LOJA,
+    [EventTypeEnum.CONCLUDED]: OrderStatusEnum.ENTREGUE,
+    [EventTypeEnum.PICKUP_AREA_ASSIGNED]: OrderStatusEnum.CHEGOU_NA_ENTREGA,
+    [EventTypeEnum.PREPARATION_REQUESTED]: OrderStatusEnum.RECEBIDO,
+    [EventTypeEnum.CANCELLATION_REQUESTED]: OrderStatusEnum.CANCELADO,
+    [EventTypeEnum.CANCELLATION_REQUEST_DENIED]: OrderStatusEnum.CANCELADO,
+    [EventTypeEnum.ORDER_CANCELLATION_REQUEST]: OrderStatusEnum.CANCELADO,
+    [EventTypeEnum.CANCELLED_DENIED]: OrderStatusEnum.CANCELADO,
+};
